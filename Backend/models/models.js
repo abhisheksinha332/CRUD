@@ -4,13 +4,8 @@ const DetailSchema = mongoose.Schema({
     title : String,
     email : String,
     comment : String,
-    picture : String,
-    createdAt :{
-        type : Date,
-        default : new Date()
-    }
 })
 
-const Models = mongoose.model('Models',DetailSchema )
+const Models = mongoose.model('FirstCollection',DetailSchema )
 
 export default Models
