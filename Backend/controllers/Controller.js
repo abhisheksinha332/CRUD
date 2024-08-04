@@ -15,9 +15,7 @@ export const getModels = async(req,res) => {
 
 export const setModels = async(req,res) =>{
     try {
-        if (!req.body.title || !req.body.email || !req.body.comment) {
-            return res.status(400).json({ message: "Missing required fields" });
-        }
+       
 
         let details = new Models({
             title: req.body.title,
@@ -31,3 +29,35 @@ export const setModels = async(req,res) =>{
         res.status(404).json({message: error.message})
     }
 }
+
+
+
+export const setNotes = async (req, res) => {
+    try {
+        let notes = new Models({
+            title: req.body.title,
+            email: req.body.email,
+            body: req.body.body
+        });
+
+        await notes.save();
+        res.status(201).json(notes);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
+
+// app.post('/notes', async(req,res)=>{
+//     const title = req.body.title;
+//     const email = req.body.emeail;
+//     const body = req.body.body;
+
+// const model = await Models.create({
+//         title : title,
+//         email : email,
+//         body : body
+//     })
+
+//     res.json({model : model})
+// })

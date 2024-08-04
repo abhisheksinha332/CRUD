@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 const DetailSchema = mongoose.Schema({
     title : String,
     email : String,
-    comment : String,
+    body : String,
 })
 
-const Models = mongoose.model('FirstCollection',DetailSchema )
+const Models = mongoose.model('Userdata',DetailSchema )
 
 export default Models
