@@ -48,16 +48,53 @@ export const setNotes = async (req, res) => {
 }
 
 
-// app.post('/notes', async(req,res)=>{
-//     const title = req.body.title;
-//     const email = req.body.emeail;
-//     const body = req.body.body;
+export const getNote = async (req, res) => {
+    const noteId = req.params.id;
 
-// const model = await Models.create({
-//         title : title,
-//         email : email,
-//         body : body
-//     })
+    try {
+        const NoteDetails = await Models.findById(noteId)
+        console.log(NoteDetails)
 
-//     res.json({model : model})
-// })
+        res.status(200).json(NoteDetails)
+    } catch (error) {
+        res.status(404).json({message: error.message})
+    }
+}
+
+
+
+export const UpdateNote = async(req, res) => {
+    
+
+    try {
+        const noteId = req.params.id
+        const title = req.body.title
+        const email = req.body.email
+        const body = req.body.body
+        const note  = await Models.findByIdAndUpdate(noteId,{
+            title : title,
+            email : email,
+            body :body
+        });
+        console.log(note)
+
+        const UpdatedNote = await Models.findById(noteId)
+        res.status(200).json(UpdatedNote)
+    } catch (error) {
+        res.status(404).json({message: error.message})
+    }
+}
+
+
+export const deleteNote = async(req, res) => {
+    try {
+        const NoteId = req.param.id
+
+        const deleteNote = await Models.deleteOne({id :NoteId})
+
+        res.status(200).json(deleteNote)
+        res.json("Success")
+    } catch (error) {
+        res.status(404).json({message: error.message})
+    }
+}
