@@ -11,7 +11,12 @@ const Notes = () => {
         email : "",
         body: "",
     });
-
+    const [updateForm, setUpdateForm] = useState({
+        _id : null,
+        title : "",
+        email : "",
+        body: "",
+    })
     useEffect(()=> {
         fetchNotes();
     },[])
@@ -68,6 +73,49 @@ const Notes = () => {
         }
     }
 
+    const handleUpdateForm = (e) => {
+        const {value, name} = e.target
+
+
+        setUpdateForm({
+            ...updateForm,
+            [name] : value,
+        })
+    }
+
+    const toggleUpdate = (note) => {
+        console.log(note)
+
+        setUpdateForm({
+            _id : note._id,
+            title : note.title,
+            email : note.email,
+            body : note.body
+        })
+    }
+
+    const UpdateNote = async(e) => {
+        e.preventDefault();
+        const {title, email, body} = updateForm
+
+        const res = await axios.put(`http://localhost:5000/data/notes/update/${updateForm._id}`,{title, email, body})
+        console.log(res)
+
+        const newNotes = [...notes]
+        const noteIndex = notes.findIndex((note => {
+            return note._id === updateForm._id
+        }))
+        newNotes[noteIndex] = res.data
+
+        setNotes(newNotes)
+
+        setUpdateForm({
+            _id : null,
+            title : '',
+            email : '',
+            body : ''
+        })
+    }
 
     return(
         <div>
@@ -82,6 +130,7 @@ const Notes = () => {
                             <p>{note.email}</p>
                             <p>{note.body}</p>
                             <button onClick={() => deleteNote(note._id)}>Delete</button>
+                            <button onClick={() =>toggleUpdate(note)}>Update</button>
                         </div>
                     ))
                 ) : (
@@ -89,7 +138,21 @@ const Notes = () => {
                 )}
             </div>
            
-            <div>
+            
+               {updateForm._id && (
+                <div> <h2>Update Note :</h2>
+                <form onSubmit={UpdateNote}>
+                    <p>Title:</p>
+                    <input value={updateForm.title} onChange={handleUpdateForm} name= "title" /><br></br>
+                    <p>Email:</p>
+                    <input value={updateForm.email} onChange={handleUpdateForm} name = "email"/><br></br>
+                    <p>Body</p>
+                    <textarea value={updateForm.body} onChange={handleUpdateForm} name = "body"/><br></br>
+                    <button type="submit">Update Note</button>
+                </form>
+            </div>)}
+
+            {!updateForm._id && (<div>
                 <h2>Create Note:</h2>
 
                 <form onSubmit={createNote}>
@@ -101,7 +164,7 @@ const Notes = () => {
                     <textarea value={createForm.body} onChange={updateCreateForm} name = "body"/><br></br>
                     <button type="submit">Create Note</button>
                 </form>
-            </div>
+            </div>)}
         </div>
     )
 }
