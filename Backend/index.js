@@ -18,17 +18,6 @@ const PORT = process.env.PORT;
 
 
 
-// app.get('/', function(req,res){
-//     res.send("Hello world, I am back to My web development !!")
-// })
-//  app.get('/hello', function(req,res){
-//     res.send("My World !!")
-//  })
-
-//  app.post('/add', (req,res) =>{
-//     Models.create(req.body)
-//  })
-
 mongoose.connect(process.env.MONGO_URL,{})
 .then( app.listen(PORT, function(err){
     if (err) console.log("Error in server setup")

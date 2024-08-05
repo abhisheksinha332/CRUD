@@ -87,16 +87,16 @@ export const UpdateNote = async(req, res) => {
 
 
 export const deleteNote = async(req, res) => {
-    const NoteId = req.param.id
+    const NoteId = req.params.id
     try {
         
         
-        // const NoteDetails =  Models.findById(NoteId);
-        // if (!NoteDetails) {
-        //     return res.status(404).json({ message: "Note not found" });
-        // }
+        const NoteDetails = await Models.findById(NoteId);
+        if (!NoteDetails) {
+            return res.status(404).json({ message: "Note not found" });
+        }
 
-        await Models.deleteOne({id :NoteId})
+        await Models.deleteOne({_id :NoteId})
 
         res.status(200).json({ message: "Note deleted successfully" });
         
