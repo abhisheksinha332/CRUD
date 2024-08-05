@@ -2,7 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 
-import Notes from './notes'
+import Notes from './Components/notes'
 
 
 const App = () => {
