@@ -44,7 +44,13 @@ export const login = async(req,res) => {
     const exp = Date.now() + 1000 * 60 * 60 * 24 * 30
     const token = jwt.sign({sub: user._id, exp: exp}, process.env.SECRET)
 
-    res.json(token)
+
+    res.cookie("Authorization", token, {
+        expires : new Date(exp),
+        httpOnly : true,
+        sameSite : 'lax'
+    })
+    res.status(201).json("Ok");
     } catch (error) {
         res.status(404).json({message: error.message})
     }
@@ -52,5 +58,12 @@ export const login = async(req,res) => {
 }
 
 export const logout = (req, res) => {
+    res.clearCookie("Authorization")
+    res.status(201).json("Ok");
+}
 
+
+export const checkAuth = (req,res) => {
+
+    res.status(201).json(req.user);
 }
