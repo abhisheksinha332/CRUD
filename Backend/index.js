@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose';
 import 'dotenv/config'
 import cors from 'cors'
+import cookieParser from 'cookie-parser';
 
 
 
@@ -12,7 +13,11 @@ console.log("hello world");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({
+    origin: true,
+    credentials: true
+}));
 
 
 const PORT = process.env.PORT;
