@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from 'axios'
 
+import Notedetails from './NoteDetails'
+
 
 
 const Notes = () => {
@@ -122,20 +124,8 @@ const Notes = () => {
             
             <div>
 
-            <h2>Fetch Note:</h2>
-                {notes.length > 0 ? (
-                    notes.map(note => (
-                        <div key={note._id}>
-                            <h3>{note.title}</h3>
-                            <p>{note.email}</p>
-                            <p>{note.body}</p>
-                            <button onClick={() => deleteNote(note._id)}>Delete</button>
-                            <button onClick={() =>toggleUpdate(note)}>Update</button>
-                        </div>
-                    ))
-                ) : (
-                    <p>No notes available</p>
-                )}
+            <Notedetails notes={notes} deleteNote={deleteNote} toggleUpdate={toggleUpdate}/>
+            
             </div>
            
             
