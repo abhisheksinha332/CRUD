@@ -7,6 +7,7 @@ import cors from 'cors'
 
 import router from './routes/routes.js';
 
+
 console.log("hello world");
 
 const app = express();
