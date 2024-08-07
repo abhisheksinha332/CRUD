@@ -24,7 +24,7 @@ const Notes = () => {
     },[])
 
     const fetchNotes = async() => {
-        const res = await axios.get('http://localhost:5000/data')
+        const res = await axios.get('')
        
         const data = await res.data
         setNotes(data)
@@ -49,7 +49,7 @@ const Notes = () => {
     const createNote = async(e) => {
         e.preventDefault();
 
-        const res = await axios.post('http://localhost:5000/data/notes', createForm)
+        const res = await axios.post('/notes', createForm)
 
         setNotes([...notes, res.data])
         //console.log(res)
@@ -64,7 +64,7 @@ const Notes = () => {
     const deleteNote = async(_id) =>{
         try {
             
-            const res = await axios.delete(`http://localhost:5000/data/notes/delete/${_id}`);
+            const res = await axios.delete(`/notes/delete/${_id}`);
            console.log(res)
             
            setNotes(notes.filter(note => note._id !== _id));
@@ -100,7 +100,7 @@ const Notes = () => {
         e.preventDefault();
         const {title, email, body} = updateForm
 
-        const res = await axios.put(`http://localhost:5000/data/notes/update/${updateForm._id}`,{title, email, body})
+        const res = await axios.put(`/notes/update/${updateForm._id}`,{title, email, body})
         console.log(res)
 
         const newNotes = [...notes]

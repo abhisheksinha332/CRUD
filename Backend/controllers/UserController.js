@@ -63,6 +63,7 @@ export const logout = (req, res) => {
 }
 
 
+
 export const checkAuth = (req,res) => {
 
     res.status(201).json(req.user);
